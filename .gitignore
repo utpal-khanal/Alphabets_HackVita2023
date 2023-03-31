@@ -1,7 +1,12 @@
 ###
 # Unity folders and files
 ###
-Neural-Network-Experiments-main/Assets
+Neural-Network-Experiments-main/Assets/Data
+Neural-Network-Experiments-main/Assets/Graphics
+Neural-Network-Experiments-main/Assets/Plugins
+Neural-Network-Experiments-main/Assets/Prefabs
+Neural-Network-Experiments-main/Assets/Resources
+Neural-Network-Experiments-main/Assets/Processed Bytes
 Neural-Network-Experiments-main/Build
 Neural-Network-Experiments-main/[Ll]ibrary
 Neural-Network-Experiments-main/[Ll]ocal[Cc]ache
