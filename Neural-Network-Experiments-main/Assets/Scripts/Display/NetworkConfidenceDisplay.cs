@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class NetworkConfidenceDisplay : MonoBehaviour
 {
+
 	public TextAsset networkFile;
-	public string predictedLabel;
+	public static string predictedLabel;
 
 	public MeshRenderer display;
 	public TMPro.TMP_Text labelsUI;
@@ -14,6 +15,10 @@ public class NetworkConfidenceDisplay : MonoBehaviour
 	ImageLoader loader;
 	DrawingController drawingController;
 	NeuralNetwork network;
+
+	public TMPro.TMP_Text Accuracy;///////////////////////////////////////////////////////////// 
+
+
 
 	void Start()
 	{
@@ -30,6 +35,8 @@ public class NetworkConfidenceDisplay : MonoBehaviour
 		(int prediction, double[] outputs) = network.Classify(image.pixelValues);
 
 		UpdateDisplay(image, outputs, prediction);
+
+
 	}
 
 	void UpdateDisplay(Image image, double[] outputs, int prediction)
@@ -38,6 +45,7 @@ public class NetworkConfidenceDisplay : MonoBehaviour
 
 		var rankedLabels = new List<RankedLabel>();
 		double s = 0;
+
 		for (int i = 0; i < outputs.Length; i++)
 		{
 			var r = new RankedLabel() { name = loader.LabelNames[i], score = (float)outputs[i] };
@@ -55,6 +63,15 @@ public class NetworkConfidenceDisplay : MonoBehaviour
 		}
 
 		display.material.mainTexture = image.ConvertToTexture2D();
+
+		for(int i = 0; i < rankedLabels.Count; i++) //////////////////////////////////////////////
+        {
+			if(ChangeStringToInt(rankedLabels[i].name) == DrawingController.currentQuestion)///////////////////////////////////////////////
+            {
+				Accuracy.text = ((int)(((rankedLabels[i].score)*100))).ToString() + "%";///////////////////////////////////////////
+				break;/////////////////////////////////////////
+            }
+        }
 	}
 
 	public struct RankedLabel
@@ -69,5 +86,21 @@ public class NetworkConfidenceDisplay : MonoBehaviour
 				return $"{score * 100:0.00}%";
 			}
 		}
+	}
+
+	
+
+	int ChangeStringToInt(string a)///////////////////////////////////////////////////////////////////
+    {
+		if (a == "Zero") return 0;
+		else if (a == "One") return 1;
+		else if (a == "Two") return 2;
+		else if (a == "Three") return 3;
+		else if (a == "Four") return 4;
+		else if (a == "Five") return 5;
+		else if (a == "Six") return 6;
+		else if (a == "Seven") return 7;
+		else if (a == "Eight") return 8;
+		else return 9;
 	}
 }

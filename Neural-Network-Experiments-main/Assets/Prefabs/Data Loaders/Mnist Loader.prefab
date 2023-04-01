@@ -47,8 +47,8 @@ MonoBehaviour:
   imageSize: 28
   greyscale: 1
   dataFiles:
-  - imageFile: {fileID: 4900000, guid: 67ce8153ce8b06d439df69cd11392121, type: 3}
-    labelFile: {fileID: 4900000, guid: ee508af336e34734fa9186f19216d49e, type: 3}
+  - imageFile: {fileID: 4900000, guid: 434e0a957cbd0ea4f86e75cb129d60e5, type: 3}
+    labelFile: {fileID: 4900000, guid: e8651e37d6be5694ba64b1d8d16c82e8, type: 3}
   labelNames:
   - A
   - B

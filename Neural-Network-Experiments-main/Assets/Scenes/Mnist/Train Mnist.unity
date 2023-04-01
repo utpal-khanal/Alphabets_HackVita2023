@@ -513,7 +513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 605a793bdabe18a4aa5aadff5cc22b22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  networkSaveName: final save
+  networkSaveName: final Weights AtoZ
   trainingSplit: 0.8
   hyperParameters:
     layerSizes: 100300002c010000c8000000640000001a000000

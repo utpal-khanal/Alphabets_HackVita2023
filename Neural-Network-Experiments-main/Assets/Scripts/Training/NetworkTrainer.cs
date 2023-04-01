@@ -29,11 +29,27 @@ public class NetworkTrainer : MonoBehaviour
 	bool hasLoaded;
 	int epochCount;
 
+	int k = 0;
 
 	void Start()
 	{
 		StartTrainingSession();
-	}
+        StartCoroutine(SaveData());
+
+    }
+
+	IEnumerator SaveData()
+	{
+		while (true)
+		{
+
+            
+            yield return new WaitForSeconds(300);
+
+            Save();
+
+        }
+    }
 
 	void Update()
 	{
@@ -113,10 +129,11 @@ public class NetworkTrainer : MonoBehaviour
 
 	public void Save()
 	{
-		string path = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Assets", networkSaveName + ".json");
+		string path = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Assets/Saved Weights", k.ToString() + networkSaveName + ".json");
 		NetworkSaveData.SaveToFile(neuralNetwork, path);
 		Debug.Log("Saved network to: " + path);
-	}
+        k++;
+    }
 
 	public void Save(string path, string fileName)
 	{

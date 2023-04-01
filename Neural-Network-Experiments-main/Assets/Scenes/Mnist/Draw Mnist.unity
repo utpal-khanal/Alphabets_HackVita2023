@@ -123,56 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &110229849
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 110229851}
-  - component: {fileID: 110229850}
-  m_Layer: 0
-  m_Name: Drawing Controller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &110229850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 110229849}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40fbbe560c9bc304a8d46cc5acc57fed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  drawResolution: 1024
-  outputResolution: 28
-  canvasCollider: {fileID: 1998205854}
-  drawCompute: {fileID: 7200000, guid: 508114a347605554683a576812e257e7, type: 3}
-  brushRadius: 25
-  smoothing: 0.25
---- !u!4 &110229851
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 110229849}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.5700002, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &167599659
 GameObject:
   m_ObjectHideFlags: 0
@@ -352,14 +302,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -6487331463029577795, guid: 019ecd4d7d72d1f41a79fa7f7850ac90, type: 3}
-      propertyPath: dataFiles.Array.data[0].imageFile
-      value: 
-      objectReference: {fileID: 4900000, guid: 434e0a957cbd0ea4f86e75cb129d60e5, type: 3}
-    - target: {fileID: -6487331463029577795, guid: 019ecd4d7d72d1f41a79fa7f7850ac90, type: 3}
-      propertyPath: dataFiles.Array.data[0].labelFile
-      value: 
-      objectReference: {fileID: 4900000, guid: e8651e37d6be5694ba64b1d8d16c82e8, type: 3}
     - target: {fileID: 8691681013775473229, guid: 019ecd4d7d72d1f41a79fa7f7850ac90, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -965,7 +907,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 722675f08424d694294bb590a4f7075c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  networkFile: {fileID: 4900000, guid: c895123fca3d3914a9621453e5b8198d, type: 3}
+  networkFile: {fileID: 4900000, guid: 81b0637a770f01a4f8e06e607d6c6401, type: 3}
   predictedLabel: 
   display: {fileID: 1998205851}
   labelsUI: {fileID: 814340128}
@@ -1116,3 +1058,68 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &5090687235077274199
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5090687235053093644, guid: bb7b150d38f0b1b418d2ae5c9c189d0e, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5090687235053093644, guid: bb7b150d38f0b1b418d2ae5c9c189d0e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.5700002
+      objectReference: {fileID: 0}
+    - target: {fileID: 5090687235053093644, guid: bb7b150d38f0b1b418d2ae5c9c189d0e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5090687235053093644, guid: bb7b150d38f0b1b418d2ae5c9c189d0e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5090687235053093644, guid: bb7b150d38f0b1b418d2ae5c9c189d0e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5090687235053093644, guid: bb7b150d38f0b1b418d2ae5c9c189d0e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5090687235053093644, guid: bb7b150d38f0b1b418d2ae5c9c189d0e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5090687235053093644, guid: bb7b150d38f0b1b418d2ae5c9c189d0e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5090687235053093644, guid: bb7b150d38f0b1b418d2ae5c9c189d0e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5090687235053093644, guid: bb7b150d38f0b1b418d2ae5c9c189d0e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5090687235053093644, guid: bb7b150d38f0b1b418d2ae5c9c189d0e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5090687235053093645, guid: bb7b150d38f0b1b418d2ae5c9c189d0e, type: 3}
+      propertyPath: brushRadius
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 5090687235053093645, guid: bb7b150d38f0b1b418d2ae5c9c189d0e, type: 3}
+      propertyPath: canvasCollider
+      value: 
+      objectReference: {fileID: 1998205854}
+    - target: {fileID: 5090687235053093646, guid: bb7b150d38f0b1b418d2ae5c9c189d0e, type: 3}
+      propertyPath: m_Name
+      value: Drawing Controller
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bb7b150d38f0b1b418d2ae5c9c189d0e, type: 3}

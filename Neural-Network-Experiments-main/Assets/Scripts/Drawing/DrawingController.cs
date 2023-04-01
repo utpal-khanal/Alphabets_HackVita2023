@@ -1,9 +1,29 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class DrawingController : MonoBehaviour
 {
+	public static int currentQuestion = 0; //////////////////////////////////////////////////////////
+	Game game;///////////////////////////////////////////
+	GameObject PhysicalDigit;////////////////////////////////////////////////////////////
+	[SerializeField] GameObject platform;/////////////////////////////////////////////
+	[SerializeField] GameObject[] positionToInstantiate; ////////////////////////////////////////
+	[SerializeField] Vector3 centerPosition;/////////////////////////////////
+	[SerializeField] int gameScore = 10;
+	[SerializeField] TMPro.TMP_Text gameScoreHolder;
+	[SerializeField] float DeadEndForDigits;
+	[SerializeField] float deltaIncreaseAcceleration = 0.05f;
+	float modifiedAcceleration = 8;
 
+
+	bool gamingMode = false;/////////////////////////////////////////////////
+	int countForGamingMode = 0;/////////////////////////////////////
+	bool playingTheGame = false;
+	bool forNextScene = false;
+	
+	
+	
 	public int drawResolution = 1024;
 	public int outputResolution = 28;
 
@@ -22,6 +42,7 @@ public class DrawingController : MonoBehaviour
 
 	void Start()
 	{
+		
 		cam = Camera.main;
 		ComputeHelper.CreateRenderTexture(ref canvas, drawResolution, drawResolution, FilterMode.Bilinear, ComputeHelper.defaultGraphicsFormat, "Draw Canvas");
 		canvasCollider.gameObject.GetComponent<MeshRenderer>().material.mainTexture = canvas;
@@ -30,6 +51,12 @@ public class DrawingController : MonoBehaviour
 		boundsBuffer.SetData(new int[] { drawResolution - 1, 0, drawResolution - 1, 0 });
 		drawCompute.SetBuffer(0, "bounds", boundsBuffer);
 		drawCompute.SetTexture(0, "Canvas", canvas);
+
+		RandomQuestion(); //////////////////////////////////////////////////////////////////////////
+
+		Physics.gravity = new Vector3(0f, -9.8f, 0);
+		forNextScene = false;
+
 	}
 
 	public RenderTexture Canvas => canvas;
@@ -55,11 +82,52 @@ public class DrawingController : MonoBehaviour
 		return outputCanvas;
 	}
 
+	bool giveQuestion = true;
+
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.C))
+		if (forNextScene == true) return;
+
+		if(playingTheGame)
+        {
+			if(giveQuestion)
+            {
+				RandomQuestion();
+				giveQuestion = false;
+            }
+
+			if (Input.GetKeyDown(KeyCode.C))
+			{
+				//Debug.Log(GiveResult(NetworkConfidenceDisplay.predictedLabel));////////////////////////////////////////////////////////
+				GiveResult(NetworkConfidenceDisplay.predictedLabel);
+				Clear();
+
+			}
+
+			if(PhysicalDigit != null && PhysicalDigit.transform.position.y <= DeadEndForDigits && gameScore > 0)
+            {
+				Destroy(PhysicalDigit);
+			    gameScore -= 5;
+				gameScoreHolder.text = gameScore.ToString();
+				if(gameScore <= 0)
+                {
+					GoToNextScene();
+				}
+				else
+                {
+					RandomQuestion();
+				}
+				
+            }
+
+		}
+
+		if (!gamingMode && Input.GetKeyDown(KeyCode.C))
 		{
+			//Debug.Log(GiveResult(NetworkConfidenceDisplay.predictedLabel));////////////////////////////////////////////////////////
+			GiveResult(NetworkConfidenceDisplay.predictedLabel);
 			Clear();
+			
 		}
 
 		Vector2 mouseWorld = cam.ScreenToWorldPoint(Input.mousePosition);
@@ -90,6 +158,7 @@ public class DrawingController : MonoBehaviour
 	{
 		boundsBuffer.SetData(new int[] { drawResolution - 1, 0, drawResolution - 1, 0 });
 		ComputeHelper.ClearRenderTexture(canvas);
+		
 	}
 
 	void OnDestroy()
@@ -97,4 +166,144 @@ public class DrawingController : MonoBehaviour
 		ComputeHelper.Release(boundsBuffer);
 		ComputeHelper.Release(canvas, outputCanvas, croppedCanvas);
 	}
+
+	void RandomQuestion() ////////////////////////////////////////////////////////////////
+    {
+		if(!gamingMode)
+        {
+			currentQuestion = Random.Range(0, 9);
+			Debug.Log(currentQuestion);
+			game = FindObjectOfType<Game>();
+			PhysicalDigit = game.InstantiateADigit(currentQuestion);
+		}
+		else if(gamingMode)
+        {
+			currentQuestion = Random.Range(0, 9);
+			Debug.Log(currentQuestion);
+			game = FindObjectOfType<Game>();
+			int a = Random.Range(0, 2);
+			PhysicalDigit = game.InstantiateADigitForTheGame(currentQuestion, positionToInstantiate[a].transform.position);
+			if(a==1)
+            {
+				PhysicalDigit.GetComponent<Rigidbody>().AddForce(new Vector3(centerPosition.x, centerPosition.y, centerPosition.z) * 20, ForceMode.Impulse);
+			}
+            else
+            {
+				PhysicalDigit.GetComponent<Rigidbody>().AddForce(new Vector3(-centerPosition.x, centerPosition.y, centerPosition.z) * 20, ForceMode.Impulse);
+			}
+		}
+		
+    }
+    private void FixedUpdate()
+    {
+		if(gamingMode && playingTheGame && PhysicalDigit != null)
+        {
+			Rigidbody r = PhysicalDigit.GetComponent<Rigidbody>();
+
+			
+
+			if(r.velocity.y <= 0)
+            {
+				r.AddForce(new Vector3(0, modifiedAcceleration, 0), ForceMode.Acceleration);
+			}
+			
+		}
+	}
+
+	void GiveResult(string a) ///////////////////////////////////////////////////////////////////
+	{
+		int yourAns = 0;
+
+		if (a == "Zero") yourAns = 0;
+		else if (a == "One") yourAns = 1;
+		else if (a == "Two") yourAns = 2;
+		else if (a == "Three") yourAns = 3;
+		else if (a == "Four") yourAns = 4;
+		else if (a == "Five") yourAns = 5;
+		else if (a == "Six") yourAns = 6;
+		else if (a == "Seven") yourAns = 7;
+		else if (a == "Eight") yourAns = 8;
+		else if (a == "Nine") yourAns = 9;
+
+		if (yourAns == currentQuestion)
+        {
+			
+
+			if (!gamingMode)
+            {
+				countForGamingMode++;
+				//Debug.Log("Correct");
+				if (PhysicalDigit.gameObject.GetComponent<MeshDestroy>() != null)
+				{
+					PhysicalDigit.gameObject.GetComponent<MeshDestroy>().destroyItOnce = true;
+				}
+
+				if(countForGamingMode != 1)
+                {
+					RandomQuestion();            ///////////////////////////////////////////////////////////////
+				}
+				else
+                {
+					gamingMode = true;
+					Debug.Log("Lets Play game");
+					Debug.Log("Making Transition");
+					StartCoroutine(TransitionTimeToPlayTheGame());
+                }
+
+			}
+
+			else if(gamingMode && gameScore >= 0)
+            {
+				//Debug.Log("Correct");
+				gameScore += 10;
+				modifiedAcceleration = modifiedAcceleration - deltaIncreaseAcceleration;
+				Debug.Log(gameScore);
+
+				gameScoreHolder.text = gameScore.ToString();
+
+				if (PhysicalDigit.gameObject.GetComponent<MeshDestroy>() != null)
+				{
+					PhysicalDigit.gameObject.GetComponent<MeshDestroy>().destroyItOnce = true;
+				}
+
+				RandomQuestion();            ///////////////////////////////////////////////////////////////
+				
+			}
+			
+		}
+		else
+        {
+			if(!gamingMode)
+            {
+				//Debug.Log("No");
+				//Debug.Log("currentQuestion" + currentQuestion + "and" + "yourAns" + yourAns);
+			}
+			else if(gamingMode)
+            {
+				//Debug.Log("Decrese the score");
+				gameScore -= 5;
+				
+				Debug.Log(gameScore);
+				gameScoreHolder.text = gameScore.ToString();
+			}
+			
+        }
+
+	}
+
+	IEnumerator TransitionTimeToPlayTheGame()
+    {
+		yield return new WaitForSeconds(2f);
+		Clear();
+		platform.SetActive(false);
+		playingTheGame = true;
+    }
+
+	void GoToNextScene()
+    {
+		forNextScene = true;
+		Debug.Log("next Scene");
+    }
+
+   
 }

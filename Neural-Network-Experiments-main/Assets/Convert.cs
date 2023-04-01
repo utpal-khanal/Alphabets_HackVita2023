@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.IO;
 using static Unity.VisualScripting.Member;
 using System;
@@ -12,6 +13,8 @@ public struct TextureData {
 
 public class Convert : MonoBehaviour
 {
+    [SerializeField] GameObject gameOverMenu;
+    [SerializeField] GameObject settingsMenu;
     Texture2D pngTexture;
     [SerializeField] ImageLoader imageLoader;
     [SerializeField] ImageViewer imageViewer;
@@ -22,14 +25,17 @@ public class Convert : MonoBehaviour
     List<Texture2D> pngList;
     public List<Image> imageList = new List<Image>();
 
+    int choosed = 0;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        DontDestroyOnLoad(this.gameObject);
+        gameOverMenu.SetActive(false);
 
         /* char c = (char)104;
          int c = '0';
-         Debug.Log(c + " my char");*/
+         Debug.Log(c + " my char");*//*
 
 
 
@@ -96,13 +102,73 @@ public class Convert : MonoBehaviour
 
         //imageProcessor.SetMyImage(image);
 
-
+*/
 
 
 
 
 
     }
+    [ContextMenu("DisplayGameOver")]
+    public void DisplayGameOver()
+    {
+        gameOverMenu.SetActive(true);
+    }
+
+    [ContextMenu("MainMenu")]
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    [ContextMenu("MainMenu")]
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+    public void DisplaySettingsMenu()
+    {
+        settingsMenu.SetActive(true);
+    }
+
+    public void CloseSettingMenu()
+    {
+        settingsMenu.SetActive(false);
+    }
+
+    public void PlayGame()
+    {
+        if(choosed == 0)
+        {
+            SceneManager.LoadScene(1);
+
+        }
+        else if(choosed == 1)
+        {
+            SceneManager.LoadScene(2);
+
+        }
+    }
+
+    public void SetDataSetAsNumbers()
+    {
+        choosed = 0;
+    }
+
+    public void SetDataSetAsLetters()
+    {
+        choosed = 1;
+    }
+
+
+
+
 
     // Update is called once per frame
     void Update()
