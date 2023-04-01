@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using System.IO;
 using static Unity.VisualScripting.Member;
 using System;
+using Unity.VisualScripting;
 
 public struct TextureData {
     public Texture2D texture;
@@ -13,25 +14,19 @@ public struct TextureData {
 
 public class Convert : MonoBehaviour
 {
-    [SerializeField] GameObject gameOverMenu;
-    [SerializeField] GameObject settingsMenu;
-    Texture2D pngTexture;
-    [SerializeField] ImageLoader imageLoader;
-    [SerializeField] ImageViewer imageViewer;
-    [SerializeField] ImageProcessor imageProcessor;
-    [SerializeField] byte[] pngbyte;
-    List<TextureData> textureDataList = new List<TextureData>();
+    [SerializeField] GameObject mainMenu;
+    [SerializeField] GameObject SettingMenu;
 
-    List<Texture2D> pngList;
-    public List<Image> imageList = new List<Image>();
 
-    int choosed = 0;
+    bool choosed = false;
 
     // Start is called before the first frame update
     void Start()
     {
         DontDestroyOnLoad(this.gameObject);
-        gameOverMenu.SetActive(false);
+        mainMenu.SetActive(true);
+        SettingMenu.SetActive(false);
+
 
         /* char c = (char)104;
          int c = '0';
@@ -109,10 +104,16 @@ public class Convert : MonoBehaviour
 
 
     }
+
+    private void FixedUpdate()
+    {
+        Debug.Log(choosed);
+    }
+
     [ContextMenu("DisplayGameOver")]
     public void DisplayGameOver()
     {
-        gameOverMenu.SetActive(true);
+        mainMenu.SetActive(true);
     }
 
     [ContextMenu("MainMenu")]
@@ -134,36 +135,42 @@ public class Convert : MonoBehaviour
 
     public void DisplaySettingsMenu()
     {
-        settingsMenu.SetActive(true);
+        SettingMenu.SetActive(true) ;
+        mainMenu.SetActive(false) ;
     }
 
     public void CloseSettingMenu()
     {
-        settingsMenu.SetActive(false);
+        SettingMenu.SetActive(false) ;
+        mainMenu.SetActive(true) ;
     }
+
+    
 
     public void PlayGame()
     {
-        if(choosed == 0)
+        if(choosed == true)
         {
             SceneManager.LoadScene(1);
 
         }
-        else if(choosed == 1)
+        else
         {
             SceneManager.LoadScene(2);
-
         }
     }
 
     public void SetDataSetAsNumbers()
     {
-        choosed = 0;
+        choosed = true;
+
+        Debug.Log("number");
     }
 
     public void SetDataSetAsLetters()
     {
-        choosed = 1;
+        choosed = false;
+        Debug.Log("alpajsdfas");
     }
 
 

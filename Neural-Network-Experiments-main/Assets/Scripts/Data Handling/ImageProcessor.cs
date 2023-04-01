@@ -22,7 +22,8 @@ public class ImageProcessor : MonoBehaviour
 
     void Start()
 	{
-		imageList = convert.imageList;
+
+		//imageList = convert.imageList;
 
 		loader = FindObjectOfType<ImageLoader>();
 		prevImageIndex = -1;

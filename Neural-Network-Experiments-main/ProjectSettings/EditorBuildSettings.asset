@@ -6,15 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Mnist/Train Mnist.unity
-    guid: 5219360d0f52b074a8e405c02e3762d6
+    path: Assets/Scenes/AtoZ/Menu.unity
+    guid: 20af980328e2c8349a37746afce6c758
   - enabled: 1
-    path: Assets/Scenes/Mnist/Draw Mnist.unity
-    guid: fcf1918ff74abdd458af717eebb26bd4
+    path: Assets/Scenes/AtoZ/DigitsScene.unity
+    guid: 4dec216e67c626f4592dc24dd50bd086
   - enabled: 1
-    path: Assets/Scenes/Mnist/Process Mnist.unity
-    guid: 76ebb6da7e225b247b9789decb68a2bc
-  - enabled: 1
-    path: Assets/Scenes/Mnist/View Mnist.unity
-    guid: f6c4a9cd06a9c7f41950d1d7a5ff130c
+    path: Assets/Scenes/AtoZ/Letters Scene.unity
+    guid: 179830cc5d1955549b556abe960d385d
   m_configObjects: {}
